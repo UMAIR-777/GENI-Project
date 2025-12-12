@@ -1,0 +1,23 @@
+{
+  "code_coverage": 94.9438202247191,
+  "total_lines": 178,
+  "executed_lines": 169,
+  "missing_lines": [
+    783,
+    820,
+    823,
+    907,
+    908,
+    940,
+    942,
+    944,
+    951
+  ],
+  "total_features": 32,
+  "covered_features": 0,
+  "warnings": [
+    "Unexecuted lines in src/node_service.py: [783, 820, 823, 907, 908, 940, 942, 944, 951]",
+    "Code coverage is below 100%: 94.94%",
+    "Only 0/32 feature markers were covered."
+  ]
+}

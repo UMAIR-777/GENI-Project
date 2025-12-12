@@ -1,0 +1,16 @@
+{
+"id": "Get_Youtube_Transcript",
+"type": "runnable",
+"data": {"id": ["langgraph",
+                "utils",
+                "runnable",
+                "RunnableCallable"],
+        "name": "Get_Youtube_Transcript"
+        },
+"inputs": {
+    "youtube_url": ""
+},
+"output": {
+"transcript": ""
+}
+}

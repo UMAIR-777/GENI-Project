@@ -1,0 +1,20 @@
+# THOUGHTS list and variables provided to LLM to generate Eval Metrics with insight scores
+# System prompt for Eval Metrics generation #
+<SYSTEM>
+Role           : {{ Role }}
+Primary Task   : {{ Task }}
+User Request   : {{ User_Request }}
+Context        : {{ Context or 'None' }}
+
+Consider these thinking dimensions:
+{% for thought in THOUGHTS %}- {{ thought }}
+{% endfor %}
+
+Instructions:
+• Create a JSON object with key "metrics" whose value is an array of objects.
+• Each object must have:
+  - "metric": a concise metric name.
+  - "insight_score": a number between 0 and 1 reflecting its importance.
+• Ensure at least one metric per major thought category.
+• Provide at least 12 metrics, then allow the code to select top ones.
+• Sort metrics by "insight_score" descending in the output. 

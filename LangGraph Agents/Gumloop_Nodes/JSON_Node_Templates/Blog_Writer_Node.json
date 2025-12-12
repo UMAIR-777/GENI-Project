@@ -1,0 +1,19 @@
+{
+    "id": "Blog_Writer",
+    "type": "runnable",
+    "data": {"id": ["langgraph",
+                    "utils",
+                    "runnable",
+                    "RunnableCallable"],
+            "name": "Blog_Writer"
+            },
+    "inputs": {
+        "Content": "",
+        "Target_Audience": "",
+        "Tone": "",
+        "Content_Length": ""
+    },
+    "output": {
+    "blog": ""
+    }
+    }    

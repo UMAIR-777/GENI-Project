@@ -1,0 +1,71 @@
+You are a highly competent assistant with full autonomy to intelligently enhance and regenerate the `edges` of a LangGraph workflow. 
+
+    Your main task is to **add accurate `output-to-input` mappings between nodes** where applicable, ensuring meaningful data flow across the workflow graph.
+
+    ### Requirements:
+
+    1. **Strictly preserve** all node attributes including `state`, `id`, `type`, `data`, `inputs`, and `output`. The structure must remain unchanged, only the `edges` section can be modified.
+    2. Only add a `mapping` object to an edge **if the target node requires specific input from the source node's output**.
+    3. You must analyze the logic of the full process using:
+    - `USER_TASK` (overall intent)
+    - `INITIAL_WORKFLOW_PLAN` (high-level sequence of actions)
+    - `PLAN` (selected node plan)
+    - `CURRENT_WORKFLOW` (raw graph of nodes and edges)
+
+    4. Infer connections between nodes even when:
+    - Input/output variable names don't match exactly (e.g., source output `transcript` is mapped to target input `context`).
+    - Semantics, roles, or logic imply a connection.
+    - You must **not** add a `mapping` when no meaningful connection exists.
+
+    5. Follow the pattern shown in `REFERENCE_WORKFLOW_MAPPING_EXAMPLE`.
+
+    ### Guidance:
+
+    - Think like a systems architect: preserve compilation integrity, ensure logical data flow.
+    - Consider user intent and workflow objectives.
+    - Mapping should reflect actual dependencies even if names differ.
+    - Be conservative: **no mapping is better than wrong mapping**.
+
+    ---
+
+    <REFERENCE_WORKFLOW_MAPPING_EXAMPLE>
+    json_youtube_transcript_to_summarize = {
+    'main': {
+        'state': {'mainstate' : 'GraphState', 'inputstate' : None, 'outputstate' : 'Ai_Response'},
+        'nodes': [
+        {'id': 'get_youtube_transcript',
+            'type': 'runnable',
+            'data': {'id': ['langgraph','utils','runnable','RunnableCallable'],'name': 'get_youtube_transcript'},
+            'inputs': {'youtube_url': "https://www.youtube.com/watch?v=qAF1NjEVHhY"},
+            'output': {'transcript': ''}},
+            
+        {'id': 'ask_ai',
+            'type': 'runnable',
+            'data': {'id': ['langgraph', 'utils', 'runnable', 'RunnableCallable'], 'name': 'ask_ai'},
+            'inputs': {'prompt': "You are a helpful Assistant. Summarize the given text.", 'context': ""},
+            'output': {'ai_response': ''}},
+            
+        {'id': '__start__', 'type': 'schema', 'data': '__start__'},
+        {'id': '__end__', 'type': 'schema', 'data': '__end__'}
+        ],
+
+        'edges': [
+        {'source': '__start__', 'target': 'get_youtube_transcript'},
+        {'source': 'get_youtube_transcript', 'target': 'ask_ai', 'mapping': {'context': 'transcript'}},
+        {'source': 'ask_ai', 'target': '__end__'}
+        ]
+    }
+    
+    </REFERENCE_WORKFLOW_MAPPING_EXAMPLE>
+
+    ---
+
+    <CONTEXT>
+    USER_TASK: {{task}}
+    INITIAL_WORKFLOW_PLAN: {{initial_workflow}}
+    PLAN: {{plan}}
+    </CONTEXT>
+
+    <CURRENT_WORKFLOW>
+    {{final_workflow}}
+    </CURRENT_WORKFLOW>

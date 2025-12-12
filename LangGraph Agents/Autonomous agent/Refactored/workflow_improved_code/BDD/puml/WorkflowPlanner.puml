@@ -1,0 +1,56 @@
+@startuml C4 Container Diagram
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Person(aiEngineer, "AI Engineer", "Defines tasks and reviews workflows")
+
+System_Boundary(workflowSystem, "Workflow Generation System") {
+  Container(workflowAPI, "Workflow API", "Python/Flask", "Exposes endpoints for task submission and status")
+  Container(workflowPlanner, "WorkflowPlanner", "Python Component", "Decomposes tasks and generates workflows")
+  Container(templateRenderer, "TemplateRenderer", "Jinja2", "Renders prompt templates")
+  Container(aiService, "AIService", "LLM Client", "Invokes LLM for decomposition, blueprint, mapping")
+  Container(nodeService, "NodeService", "Embedding + Vector DB", "Filters nodes via vector similarity")
+  ContainerDb(availableNodesDB, "AVAILABLE_NODES DB", "JSON Store", "Source of available nodes")
+  ContainerDb(stateStore, "AgentState Store", "In-Memory/Redis", "Persists workflow state between steps")
+}
+
+Rel(aiEngineer, workflowAPI, "Submits task and queries status")
+Rel(workflowAPI, workflowPlanner, "POST /tasks → initialize_state()")
+Rel(workflowPlanner, templateRenderer, "render_prompt()")
+Rel(workflowPlanner, aiService, "ask_ai() for decomposition, blueprint, mapping")
+Rel(workflowPlanner, nodeService, "filter_nodes_by_embedding_batch()")
+Rel(workflowPlanner, availableNodesDB, "READ AVAILABLE_NODES")
+Rel(workflowPlanner, stateStore, "READ/WRITE AgentState")
+Rel(workflowPlanner, workflowAPI, "Returns workflow results")
+
+@enduml
+
+@startuml Sequence Diagram for Workflow Generation
+actor AIEngineer
+participant "Workflow API" as API
+participant "WorkflowPlanner" as Planner
+participant "TemplateRenderer" as Renderer
+participant "AIService" as LLM
+participant "NodeService" as NS
+participant "AVAILABLE_NODES DB" as DB
+participant "AgentState Store" as Store
+
+AIEngineer -> API: POST /tasks { "task": "Build model pipeline" }
+API -> Planner: initialize_state(state)  
+Planner -> Store: WRITE state with defaults  
+Planner -> Renderer: render_prompt("subtask/decompose_task.jinja2", task)  
+Planner -> LLM: ask_ai(prompt)  
+LLM --> Planner: JSON{"subtasks", "sequence"}  
+Planner -> Planner: parse and update state.subtasks/state.subtask_sequence  
+Planner -> Renderer: render_prompt("subtask/create_blueprint.jinja2", ...)  
+Planner -> LLM: ask_ai(prompt)  
+LLM --> Planner: JSON blueprint  
+Planner -> Planner: parse blueprint into state.plan  
+Planner -> DB: READ AVAILABLE_NODES  
+Planner -> NS: filter_nodes_by_embedding_batch(state, plan, available_nodes)  
+NS --> Planner: { step: [node entries] }  
+Planner -> Planner: map nodes into state.plan entries  
+Planner -> Planner: generate_workflow_from_plan(state)  
+Planner -> Store: WRITE updated state.final_workflow  
+Planner -> API: 200 OK { workflow: state.final_workflow }
+
+@enduml

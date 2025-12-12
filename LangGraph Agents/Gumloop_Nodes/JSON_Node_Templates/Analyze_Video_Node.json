@@ -1,0 +1,17 @@
+{"id": "analyze_video",
+"type": "runnable",
+"data": {"id": ["langgraph",
+                "utils",
+                "runnable",
+                "RunnableCallable"],
+        "name": "analyze_video"
+        },
+"inputs": {
+        "video_file": "",
+        "prompt": "",
+        "video_model": ""
+},
+"output": {
+        "video_analysis": ""
+}
+}

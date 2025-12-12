@@ -1,0 +1,17 @@
+{
+    "id": "Ask_AI",
+    "type": "runnable",
+    "data": {"id": ["langgraph",
+                    "utils",
+                    "runnable",
+                    "RunnableCallable"],
+            "name": "Ask_AI"
+            },
+    "inputs": {
+            "prompt": "",
+            "context": ""
+    },
+    "output": {
+            "ai_response": ""
+}
+}

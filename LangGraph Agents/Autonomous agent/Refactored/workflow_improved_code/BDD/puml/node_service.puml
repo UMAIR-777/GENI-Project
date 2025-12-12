@@ -1,0 +1,104 @@
+' =====================  C4-PlantUML library  ==========================
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/v2/C4_Context.puml
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/v2/C4_Container.puml
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/v2/C4_Dynamic.puml
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/v2/C4_State.puml
+
+' =====================  1.  CONTEXT  ==================================
+@startuml NodeSelectionContext
+title **AI-Workflow Service – Context**
+
+Person(dev, "Developer / Operator")
+System_Boundary(sys, "AI-Workflow Service") {
+  System(nodeSvc, "Node-selection micro-service", "Python")
+}
+System(db,     "PostgreSQL + pgvector", "Vector DB")
+System(ai,     "LLM API", "External LLM vendor")
+System(obs,    "Prometheus / Grafana", "Metrics stack")
+System(ext,    "Call-site micro-services", "WorkflowPlanner, etc.")
+
+Rel(dev, nodeSvc, "runs BDD tests & integrates")
+Rel(nodeSvc, db,  "vector SQL read/write", "pg-vector extension")
+Rel(nodeSvc, ai,  "prompt → JSON ids ←", "HTTPS + auth token")
+Rel(nodeSvc, ext, "Validated NodeMap / MissingNodeReport", "gRPC/JSON")
+Rel(nodeSvc, obs, "push KPI, logs", "OpenTelemetry")
+
+@enduml
+' =====================  2.  CONTAINER (runtime view)  =================
+@startuml NodeSelectionContainers
+title **AI-Workflow Service – Container view**
+
+LAYOUT_WITH_LEGEND()
+
+System_Boundary(service, "AI-Workflow Service") {
+
+  Container(nodeSvc,      "NodeService",          "FastAPI (uvicorn)", 
+            "Entry point; orchestrates the selection pipeline")
+
+  Container(emb,          "EmbeddingService",     "Python / HF Transformers",
+            "Creates & normalises 1024-d vectors")
+
+  Container(template,     "TemplateRenderer",     "Jinja2",
+            "Renders filter prompt for the LLM")
+
+  Container(aiAdapter,    "AIService Adapter",    "Python + Circuit-Breaker",
+            "Async HTTPS calls, timeout & retry")
+
+  Container(cache,        "Heuristic Node Cache", "Redis",
+            "Fallback node ids if LLM unavailable")
+
+  ContainerBreaker(cb,    "CircuitBreaker",       "resilience library",
+            "Opens after N timeouts; feeds cache")
+
+  Container(db,           "PostgreSQL + pgvector", "RDS",
+            "AVAILABLE_NODES table & stored procedure")
+
+  Container(cfg,          "StartupValidator",     "Python",
+            "Env-var & filesystem sanity check, fails-fast")
+
+  Container(metrics,      "MetricsEmitter",       "OpenTelemetry Exporter",
+            "Counters, histograms, gauges → Prometheus")
+
+  Container(lgr,          "Structured Logger",    "Loguru JSON",
+            "Picks up trace-id & masks secrets")
+}
+
+Rel(nodeSvc, emb,       "get_embeddings(text)")
+Rel(emb,     nodeSvc,   "unit-norm vector")
+
+Rel(nodeSvc, template,  "render_prompt(step, candidate_list)")
+Rel(nodeSvc, aiAdapter, "ask_ai(prompt)")
+Rel(aiAdapter, cb,      "trip/open events")
+Rel(cb,      cache,     "fetch fallback ids")
+Rel(aiAdapter, nodeSvc, "JSON: ids | MISSING_NODE")
+
+Rel(nodeSvc, db,        "execute_similarity_query(vectors)")
+Rel(db,      nodeSvc,   "ranked node rows")
+
+Rel(nodeSvc, metrics,   "success/fail counters, latency")
+Rel(nodeSvc, lgr,       "structured logs + errors")
+
+Rel_U(cfg,   nodeSvc,   "blocks start if invalid")
+
+@enduml
+' ===================== 3.  DYNAMIC / STATE  ===========================
+@startuml NodeSelectionState
+title **State machine for a single BlueprintStep**
+
+state READY        #palegreen
+state EMBEDDED     #palegreen
+state PROMPTED     #palegreen
+state FILTERED     #palegreen
+state MISSING_NODE #pink
+state FAILED       #pink
+[*] --> READY
+
+READY --> EMBEDDED     : extract_texts_from_step ✔\ncompute_normalized_embeddings ✔
+EMBEDDED --> PROMPTED  : build_candidate_list ✔\nfilter_ai_prompt ✔
+PROMPTED --> FILTERED  : AIService returns ids ✅
+PROMPTED --> MISSING_NODE : AIService returns {"MISSING_NODE":true}
+PROMPTED --> FAILED       : AI timeout / JSON parse error
+MISSING_NODE --> [*]
+FILTERED --> [*]
+FAILED --> CircuitBreaker : error counted
+@enduml

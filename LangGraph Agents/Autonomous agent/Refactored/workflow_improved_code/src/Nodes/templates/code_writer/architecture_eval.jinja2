@@ -1,0 +1,70 @@
+{# Jinja2 template: architecture_eval.jinja2 #}
+{# Converged and enhanced evaluation metrics for Architecture (C4) phase #}
+{
+  "C4_Level_Completeness": {
+    "description": "Coverage of Context, Container, Component, and Code diagrams in the C4 model.",
+    "rubric": {"1": "Only 1 level represented.", "5": "2–3 levels present; some gaps.", "10": "All 4 levels fully detailed with elements."}
+  },
+
+  "Data_Flow_Clarity": {
+    "description": "Accuracy and readability of data flow between containers and components.",
+    "rubric": {"1": "Flows missing or unclear.", "5": "Basic flows shown; some links ambiguous.", "10": "All data flows clearly labeled and traced."}
+  },
+
+  "Control_Flow_and_State_Transitions": {
+    "description": "Modeling of control flow logic and state transitions across the system.",
+    "rubric": {"1": "No control or state transitions.", "5": "Partial flows; key states omitted.", "10": "Comprehensive control flow and state diagramming."}
+  },
+
+  "Interconnectivity_and_Dependency_Detail": {
+    "description": "Specification of dependencies, integration points, and third-party systems.",
+    "rubric": {"1": "No dependencies identified.", "5": "Some integrations noted; missing key dependencies.", "10": "All dependencies and integration points fully specified."}
+  },
+
+  "Scalability_and_Performance_Considerations": {
+    "description": "Inclusion of scalability patterns (caching, sharding, load-balancing) and performance needs.",
+    "rubric": {"1": "No scalability or performance plan.", "5": "Basic caching or scaling mentioned.", "10": "Detailed strategies for scaling and optimization."}
+  },
+
+  "Failure_Resilience_and_Observability": {
+    "description": "Design for fault tolerance, retries, circuit-breakers, and monitoring/observability hooks.",
+    "rubric": {"1": "No resilience or observability.", "5": "Basic retry or fallback; minimal metrics.", "10": "Robust resilience patterns and full observability design."}
+  },
+
+  "Security_and_Compliance": {
+    "description": "Inclusion of authentication, authorization, encryption, and compliance boundaries.",
+    "rubric": {"1": "No security considerations.", "5": "Basic auth or boundary defined.", "10": "Detailed security controls, encryption, and compliance points."}
+  },
+
+  "Technology_Stack_and_Tools_Suitability": {
+    "description": "Appropriateness of chosen technologies, frameworks, and tools for the solution.",
+    "rubric": {"1": "Unjustified or outdated stack.", "5": "Commonly used tools; some misfits.", "10": "Optimal tech choices aligned with requirements."}
+  },
+
+  "Documentation_and_Readability": {
+    "description": "Clarity of diagram annotations, naming conventions, and overall readability.",
+    "rubric": {"1": "Confusing or unlabeled diagrams.", "5": "Some labels; inconsistent naming.", "10": "Clear, consistent, and self-explanatory diagrams."}
+  },
+
+  "Maintainability_and_Extensibility": {
+    "description": "Ease of evolving the architecture, modularity, and extension points.",
+    "rubric": {"1": "Rigid design; difficult to extend.", "5": "Some modularity; hard to adapt.", "10": "Highly modular and easily extensible architecture."}
+  }
+}
+
+---
+
+Role: {{ role }}
+Task: {{ task }}
+
+Previous Architecture Draft (PlantUML):
+```
+{{ previous_output }}
+```
+
+Evaluate the above architecture draft according to the metrics defined above.
+Return strictly a JSON object mapping each metric to:
+  - `score`: 1–10 integer
+  - `comment`: brief justification
+
+No additional output.

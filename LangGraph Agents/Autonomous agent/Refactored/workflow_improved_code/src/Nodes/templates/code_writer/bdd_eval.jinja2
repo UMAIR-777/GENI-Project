@@ -1,0 +1,75 @@
+{# Jinja2 template: bdd_eval.jinja2 #}
+{# Converged and enhanced evaluation metrics for BDD phase #}
+{
+  "FR_Traced_To_Value_Creating_Story": {
+    "description": "Degree to which each functional requirement is mapped to clear user-value stories or KPIs.",
+    "rubric": {"1": "No traceability.", "5": "Partial mapping; key outcomes missing.", "10": "All FRs explicitly tied to measurable user value."}
+  },
+
+  "FR_Decomposed_To_Parts": {
+    "description": "Quality of breaking high-level requirements into discrete BDD features and scenarios.",
+    "rubric": {"1": "Single monolithic feature only.", "5": "Some decomposition; overlaps present.", "10": "Fully modular, non-overlapping scenarios."}
+  },
+
+  "Scenario_Format_Clarity": {
+    "description": "Compliance with Gherkin BDD syntax and precise tagging of entities.",
+    "rubric": {"1": "Incorrect format or missing tags.", "5": "Gherkin used but tags inconsistent.", "10": "Strict Gherkin, every clause and entity tagged correctly."}
+  },
+
+  "Tagging_Completeness": {
+    "description": "Annotation of each Given/When/Then entity with its type (e.g., [Component], [API], [Screen]).",
+    "rubric": {"1": "No entity tags.", "5": "Some tags present; many missing.", "10": "Every entity tagged appropriately."}
+  },
+
+  "Coverage_Of_Test_Types": {
+    "description": "Inclusion of property-based, model-based, and chaos-testing scenarios alongside functional tests.",
+    "rubric": {"1": "Only happy-path scenarios.", "5": "Some edge or parameterized tests.", "10": "Happy-path, edge, chaos, and model-based tests included."}
+  },
+
+  "Edge_Cases_Boundary_Conditions": {
+    "description": "Depth and breadth of edge-case and boundary-condition scenarios.",
+    "rubric": {"1": "None.", "5": "Few basic cases.", "10": "Comprehensive edge-case and boundary coverage."}
+  },
+
+  "Negative_Assertions_And_Error_Handling": {
+    "description": "Use of negative scenarios and explicit error condition assertions.",
+    "rubric": {"1": "No negative tests.", "5": "Some error conditions asserted.", "10": "All expected error conditions clearly asserted."}
+  },
+
+  "SOLID_Alignment": {
+    "description": "Alignment of scenarios with SOLID principles to support maintainable design.",
+    "rubric": {"1": "No design considerations.", "5": "Partial adherence to SOLID.", "10": "Scenarios reflect SOLID-oriented modular design."}
+  },
+
+  "System_Model_Completeness": {
+    "description": "Completeness and clarity of the system model, including states and transitions.",
+    "rubric": {"1": "No system model specified.", "5": "Partial model; some states or transitions missing.", "10": "Complete model with all states and transitions defined."}
+  },
+
+  "Component_Boundaries_Identified": {
+    "description": "Identification of all relevant components and system boundaries in scenarios.",
+    "rubric": {"1": "No boundaries identified.", "5": "Some boundaries specified.", "10": "All components and boundaries clearly defined."}
+  },
+
+  "Maintainability_And_Scalability": {
+    "description": "Evaluation of maintainability and scalability considerations in the BDD scenarios.",
+    "rubric": {"1": "Not maintainable or scalable.", "5": "Some considerations included.", "10": "Highly maintainable and scalable scenarios."}
+  }
+}
+
+---
+
+Role: {{ role }}
+Task: {{ task }}
+
+Previous BDD Feature Draft:
+```
+{{ previous_output }}
+```
+
+Evaluate the above BDD draft according to the metrics defined above.  
+Return strictly a JSON object where each key is a metric name mapping to an object with:
+  - `score`: integer 1–10
+  - `comment`: brief justification.
+
+No other output.

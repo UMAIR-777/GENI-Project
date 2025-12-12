@@ -1,0 +1,18 @@
+Given the task: "{{ task }}", perform the following steps:
+
+1. Carefully analyze the user's request to deeply understand the intent, context, and desired outcomes. Consider real-world domain knowledge and implicit prerequisites that are standard or necessary for achieving the task, even if not explicitly stated (e.g., collecting data before analysis, searching before booking).
+2. Identify the key objectives and specific requirements, removing any duplicate, redundant, or semantically overlapping information.
+3. Decompose the task into clear, meaningful, and stable subtasks that directly support the primary objective and align with real-world workflows.
+   - Ensure subtasks are granular enough to reflect distinct, necessary steps in the process, avoiding overly broad or combined steps (e.g., separate "search" and "book" actions).
+   - Avoid adding subtasks that are not explicitly requested or logically implied by the task’s context and domain-specific requirements.
+   - Align subtasks with capabilities of reputable automation platforms (e.g., n8n, Gumloop, Zapier) where applicable, but prioritize domain-specific accuracy over tool constraints.
+   - Include implicit prerequisites only when they are essential to the task’s logical flow (e.g., data collection before processing).
+4. For each subtask, generate 2-3 diverse, high-quality examples showcasing distinct approaches with minimal overlap. Use these examples to validate that subtasks are necessary, distinct, and logically sequenced.
+5. Analyze these examples to extract a meta-pattern using the interrogatives (Who, What, When, Where, Why, How) to ensure the subtasks cover the task’s core components, context, and dependencies.
+6. Consolidate the subtasks into a single, logically ordered sequence that respects real-world dependency chains (e.g., data collection precedes analysis, searching precedes booking). Ensure no consecutive repetition of similar subtasks and validate the sequence against domain-specific workflows to avoid logical errors.
+
+Return ONLY a valid JSON object with EXACTLY these keys:
+   - "subtasks": a list of subtask names, each reflecting a distinct, meaningful, and stable step.
+   - "sequence": a list detailing the execution order of these subtasks, ensuring logical dependencies are respected and no consecutive repetition of the same node type occurs.
+
+Do NOT include any extra tokens, markdown, or formatting (such as __start__ or __end__) in your output.

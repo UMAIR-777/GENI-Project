@@ -1,0 +1,2 @@
+Tool called: tool_name with args: {}
+Tool called: tool_name with args: {}

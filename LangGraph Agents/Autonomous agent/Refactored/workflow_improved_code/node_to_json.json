@@ -1,0 +1,211 @@
+[
+  {
+    "id": "text_summerizer",
+    "input": [
+      "text_to_summarize"
+    ],
+    "output": [
+      "summary"
+    ],
+    "tags": [
+      "Ai Text Analysis",
+      "Content Summarization",
+      "Natural Language Processing",
+      "Text Condensation"
+    ],
+    "description": [
+      "This node creates concise summaries of input text.",
+      "This node helps retain key insights and context while improving readability.",
+      "This node is typically used to condense large amounts of text into smaller, more manageable summaries."
+    ],
+    "SPO": {
+      "subject": "Text Summerizer Node",
+      "predicate": "generates concise text summaries",
+      "object": "to enhance text readability and understanding"
+    }
+  },
+  {
+    "id": "ask_ai",
+    "input": [
+      "prompt",
+      "context"
+    ],
+    "output": [
+      "ai_response"
+    ],
+    "tags": [
+      "AI Assistance",
+      "AI Interaction",
+      "Content Generation",
+      "Language Model",
+      "Text Processing"
+    ],
+    "description": [
+      "This node asks an AI model a question based on a given prompt and context.",
+      "This node provides the key benefit of leveraging advanced language models for automated content generation and question answering.",
+      "This node is typically used in applications requiring dynamic content creation or user interaction with AI systems."
+    ],
+    "SPO": {
+      "subject": "AI Inquiry Node",
+      "predicate": "generates human-like responses",
+      "object": "to facilitate interactive and informative user experiences"
+    }
+  },
+  {
+    "id": "get_youtube_transcript",
+    "input": [
+      "youtube_url"
+    ],
+    "output": [
+      "transcript"
+    ],
+    "tags": [
+      "AI Content Retrieval",
+      "Natural Language Processing",
+      "Transcript Extraction",
+      "Video Analysis",
+      "YouTube Data"
+    ],
+    "description": [
+      "This node extracts transcripts from YouTube videos.",
+      "This node provides easy access to video transcripts for further analysis.",
+      "This node is typically used in applications requiring video content analysis or summarization."
+    ],
+    "SPO": {
+      "subject": "YouTube Transcript Node",
+      "predicate": "extracts video transcripts",
+      "object": "to facilitate video content analysis"
+    }
+  },
+  {
+    "id": "blog_writer",
+    "input": [
+      "content",
+      "audience",
+      "tone",
+      "length"
+    ],
+    "output": [
+      "blog"
+    ],
+    "tags": [
+      "AI Content Creation",
+      "Automated Writing",
+      "Blog Generation",
+      "Content Generation",
+      "Text Creation"
+    ],
+    "description": [
+      "This node generates a comprehensive blog post based on the provided content and instructions.",
+      "This node helps streamline content creation by automating the writing process.",
+      "This node is typically used to create high-quality blog posts for various audiences and topics."
+    ],
+    "SPO": {
+      "subject": "Blog Writer Node",
+      "predicate": "generates comprehensive blog posts",
+      "object": "to streamline content creation and improve writing efficiency"
+    }
+  },
+  {
+    "id": "website_scraper",
+    "input": [
+      "page_url"
+    ],
+    "output": [
+      "page_text"
+    ],
+    "tags": [
+      "Data Extraction",
+      "Web Scraping",
+      "Website Analysis"
+    ],
+    "description": [
+      "This node extracts content from a website.",
+      "This node provides a key benefit of automating data collection.",
+      "This node is typically used for data mining and research purposes."
+    ],
+    "SPO": {
+      "subject": "Website Scraper Node",
+      "predicate": "extracts website content",
+      "object": "to facilitate data analysis"
+    }
+  },
+  {
+    "id": "text_categorizer",
+    "input": [
+      "text_to_classify",
+      "categories"
+    ],
+    "output": [
+      "category"
+    ],
+    "tags": [
+      "AI Category Prediction",
+      "Content Analysis",
+      "Text Categorization"
+    ],
+    "description": [
+      "This node categorizes input text based on provided categories.",
+      "This node helps in efficient text classification by utilizing AI capabilities.",
+      "This node is typically used in applications requiring automated text categorization."
+    ],
+    "SPO": {
+      "subject": "Text Categorizer Node",
+      "predicate": "categorizes input text",
+      "object": "to facilitate efficient content analysis"
+    }
+  },
+  {
+    "id": "analyze_video",
+    "input": [
+      "video_path",
+      "prompt",
+      "video_model"
+    ],
+    "output": [
+      "video_detail"
+    ],
+    "tags": [
+      "AI Analysis",
+      "Content Inspection",
+      "Media Processing",
+      "Video Analysis",
+      "Video Inspection"
+    ],
+    "description": [
+      "This node analyzes a video based on a given prompt.",
+      "This node provides a detailed report of the video analysis.",
+      "This node is typically used for automated video content inspection."
+    ],
+    "SPO": {
+      "subject": "Video Analysis Node",
+      "predicate": "performs automated video analysis",
+      "object": "to provide detailed video insights"
+    }
+  },
+  {
+    "id": "analyze_image",
+    "input": [
+      "image_path",
+      "prompt"
+    ],
+    "output": [
+      "image_detail"
+    ],
+    "tags": [
+      "AI Analysis",
+      "Content Analysis",
+      "Image Processing"
+    ],
+    "description": [
+      "This node analyzes an image based on a given prompt.",
+      "This node provides a detailed description of the image content.",
+      "This node is typically used for image analysis and understanding."
+    ],
+    "SPO": {
+      "subject": "Image Analysis Node",
+      "predicate": "generates detailed image descriptions",
+      "object": "to enhance image understanding"
+    }
+  }
+]

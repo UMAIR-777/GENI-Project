@@ -1,0 +1,25 @@
+        <Subtask_Details>
+            Subtask Name: "{step.step}"
+            Input: {step.input}
+            Output: {step.output}
+            Tags: {step.tags}
+            Description: {step.description}
+            SPO: {spo_text}
+        </Subtask_Details>
+
+        <Candidate_Nodes_List>
+        {candidate_list}
+        </Candidate_Nodes_List>
+
+        <Matching_Guidelines>
+            1. Return ONLY the exact node ID(s) from the candidate list as plain strings (e.g., "analyze_image").
+            2. Evaluate matches based on semantic similarity of inputs, outputs, tags, descriptions, and SPO fields.
+            3. Prioritize exact or semantically relevant or semantically equivalent match.
+            4. If no good match exists, return MISSING_NODE.
+        </Matching_Guidelines>
+        
+        <Expected_JSON_Output_Format>
+            Return ONLY:
+            {{"SELECTED_NODE": ["<node_id>"]}} OR {{"MISSING_NODE": ["<subtask_name>"]}}
+        </Expected_JSON_Output_Format>
+        

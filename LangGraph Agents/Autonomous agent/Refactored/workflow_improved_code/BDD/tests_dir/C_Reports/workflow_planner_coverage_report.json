@@ -1,0 +1,29 @@
+{
+  "code_coverage": 91.84782608695652,
+  "total_lines": 184,
+  "executed_lines": 169,
+  "missing_lines": [
+    646,
+    647,
+    727,
+    802,
+    803,
+    827,
+    829,
+    830,
+    847,
+    848,
+    890,
+    921,
+    922,
+    932,
+    933
+  ],
+  "total_features": 26,
+  "covered_features": 0,
+  "warnings": [
+    "Unexecuted lines in src/workflow_planner.py: [646, 647, 727, 802, 803, 827, 829, 830, 847, 848, 890, 921, 922, 932, 933]",
+    "Code coverage is below 100%: 91.85%",
+    "Only 0/26 feature markers were covered."
+  ]
+}

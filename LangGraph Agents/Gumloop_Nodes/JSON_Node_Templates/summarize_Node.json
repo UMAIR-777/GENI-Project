@@ -1,0 +1,15 @@
+{"id": "summarize",
+"type": "runnable",
+"data": {"id": ["langgraph",
+                "utils",
+                "runnable",
+                "RunnableCallable"],
+        "name": "summarize"
+        },
+"inputs": {
+        "inputText": ""
+},
+"output": {
+"summary": ""
+}
+}

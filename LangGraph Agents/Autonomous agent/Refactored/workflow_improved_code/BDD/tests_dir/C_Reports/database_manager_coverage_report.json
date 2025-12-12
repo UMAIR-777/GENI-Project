@@ -1,0 +1,11 @@
+{
+  "code_coverage": 100.0,
+  "total_lines": 181,
+  "executed_lines": 181,
+  "missing_lines": [],
+  "total_features": 18,
+  "covered_features": 0,
+  "warnings": [
+    "Only 0/18 feature markers were covered."
+  ]
+}

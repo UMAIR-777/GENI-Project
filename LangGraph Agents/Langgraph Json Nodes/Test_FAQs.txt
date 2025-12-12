@@ -1,0 +1,95 @@
+Question: Where can I see the Amazon Developer Services Agreement?
+Answer: When you sign in to the Amazon developer portal, you will find a link to the agreement at the bottom of the page.
+
+Question: How do I terminate my Amazon Developer Services Agreement?
+Answer: To terminate your agreement, email apps-notices@amazon.com with a CC to contracts-legal@amazon.com, including your developer name, contact info, and a list of your apps. Termination takes up to 10 days and is final. All app sales will be suspended, and you will have limited access to the developer portal afterward.
+
+Question: What agreements and policies must I comply with to participate in the Program?
+Answer: You must comply with the Amazon Developer Services Agreement, Program Materials License Agreement, Developer Portal Terms of Use, and Trademark, Brand, and Marketing Guidelines. All content must follow applicable laws, policy guidelines, and API documentation.
+
+Question: Am I responsible for import and export compliance?
+Answer: Yes, you are responsible for ensuring your app complies with all applicable trade control laws, including export classification and licensing. Apps using encryption may require encryption registration. Refer to the US Bureau of Industry and Security's website for more information.
+
+Question: Do my apps need to comply with a content policy?
+Answer: Yes, all apps must adhere to the content guidelines. Apps containing, facilitating, or promoting prohibited content will be rejected or suspended, and you will be notified via the email address associated with your developer account. See the Amazon Appstore Content Policy for details. For specific examples of expected app functionality, refer to the Test Criteria for Amazon Appstore Apps.
+
+Question: Are there separate ratings criteria for apps published in the Brazil marketplace?
+Answer: Yes, the Brazilian Ministry of Justice requires Amazon to display badging and ratings according to local laws for apps in the Brazilian store. Amazon assigns the ratings based on the information you provide during the app submission process.
+
+Question: What restrictions apply to my distribution of apps that contain a third party's intellectual property?
+Answer: Amazon cannot distribute apps that infringe on third-party intellectual property rights, including copyright, trademark, and publicity rights. You must have a license or permission from any third party whose intellectual property is used in your app. It is your responsibility to ensure you hold all necessary rights. If unsure, consult an attorney.
+
+Question: Does including a disclaimer in my app mean that I can use a third party's intellectual property without worrying about infringement?
+Answer: No, including a disclaimer does not protect you from intellectual property infringement. Unauthorized use of copyrighted or trademarked content, or the name, image, or likeness of a celebrity, can still constitute infringement, regardless of any disclaimers.
+
+Question: What should I do if another developer is using my intellectual property without my authorization?
+Answer: If you believe an app on the Amazon Appstore infringes your intellectual property, report it to Amazon using their online form.
+
+Question: What is selling on Amazon?
+Answer: Individuals and businesses can sell products in Amazon stores like Amazon.com. To get started, refer to our beginners guide.
+
+Question: How do I sell my product in the Amazon store?
+Answer: To sell on Amazon, follow these steps: choose a selling plan (Individual or Professional) and switch plans at any time; create a selling account for one item or many; enroll your brand in Amazon Brand Registry if applicable; use Seller Central tools to list and price your products; select a fulfillment method (Fulfilled by Merchant or Fulfillment by Amazon); consider using Amazon Ads for promotion; and grow your business with additional tools and programs.
+
+Question: My app collects personal information from end users. What requirements apply to the distribution of my app through the Program?
+Answer: Your app must notify users and obtain their consent before collecting personal information. See the Child-Directed App (COPPA) Policy for more details.
+
+Question: The target audience for my app is children. What requirements must my app adhere to?
+Answer: If your app is directed at children under 13, refer to the Child-Directed App (COPPA) Policy for information about the Children's Online Privacy Protection Act (COPPA) and other requirements.
+
+Question: What can I return?
+Answer: You can request returns for items listed on Amazon.in that are marked as 'returnable' on the product detail page and within the specified 'return window' period. Eligible products will display their return window and category (e.g., "10 Days Returnable," "7 Days Return & Exchange"). For details on non-returnable categories and specific return windows, refer to the Amazon.in Returns Policy. Products that are physically damaged, defective, missing parts, or different from their description are also eligible for return. For more details, see the Damaged, Defective or Wrong Product FAQ page.
+
+Question: What are non-returnable items?
+Answer: Items of a consumable nature, such as wax candles, pet food and grooming products, cleaning products, and fertilizers, are non-returnable. For a complete list of non-returnable categories and products, as well as the return windows for eligible categories, refer to the Amazon.in Returns Policy.
+
+Question: What are the return guidelines?
+Answer: Your address and the item you wish to return must be eligible for return. If your address is not eligible for pickup, a self-return option will be provided. For more details, see the Return Pickup and Self-Ship Guidelines. Once the return is processed, a refund will be issued according to the Amazon.in Refund Policy.
+
+Question: How can I return a gift?
+Answer: To return a gift order, visit the Gift Returns page and enter the order number. For detailed instructions, refer to the Return a Gift page. If the gift is eligible for refund or replacement under the return policy, you can return it in exchange for an Amazon Pay Gift Card if the sender provided a gift receipt. For more details, see the Gift Receipts page.
+
+Question: How can I return a gift card?
+Answer: Gift cards cannot be cancelled or returned once purchased due to regulatory restrictions. For more information on adding a gift card balance to your account, redeeming a gift card, and related restrictions, refer to the Amazon Pay Gift Card page.
+
+Question: Can my order be replaced?
+Answer: Selected items are eligible for replacement if they are physically damaged, defective, different from the product description, or have missing parts or accessories. A free replacement is available if the product is still available with the same seller. For more details, visit the Amazon.in Replacement Policy. To learn more about replacing damaged or defective products, refer to the Damaged, Defective or Wrong Item FAQs.
+
+Question: I want the replacement to be delivered to a different address.
+Answer: Replacements cannot be delivered to a different address. We recommend returning the item for a refund (if eligible for return) and placing a new order with the correct address.
+
+Question: What products can’t be sold in the Amazon store?
+Answer: Some products cannot be listed due to legal or regulatory restrictions or Amazon policies. You can request approval for new products in certain categories. If using Fulfillment by Amazon (FBA), review the list of FBA product restrictions as well.
+
+Question: How do I register to sell in the Amazon store?
+Answer: To register, choose a selling plan and create your Amazon selling account. Ensure you have the following: government-issued ID, phone number, email address, internationally chargeable credit card, bank account and routing number, business license, proof of residential address (dated within the last 180 days), and tax information. Start the registration process by clicking "Sign up," provide business, seller, billing, store, and product information, and verify your identity by uploading your ID and proof of address. You may also need to take a photo or join a video call with an Amazon associate.
+
+Question: How much does it cost to sell with Amazon?
+Answer: Amazon offers two selling plans. The Professional selling plan costs $39.99 per month plus a per-item referral fee, which varies by category. The Individual selling plan costs $0.99 per unit sold, plus a per-item referral fee, which also varies by category. The Individual plan may be best if you plan to sell fewer than 40 items per month. Additional costs may apply if you choose to use optional Amazon tools and programs.
+
+Question: How do I get paid?
+Answer: Once your selling account is settled and has a positive balance, Amazon will send funds to your bank account using an Automated Clearing House (ACH). It may take up to five business days for the payment to appear in your bank account after Amazon initiates the payment. Before receiving payments, you must provide a valid bank account as the deposit method for your selling account. Payments cannot be made to a credit card or online payment system.
+
+Question: How will I know when I have a sale?
+Answer: You can use your Notification Preferences to receive an email or text message when you receive a customer order.
+
+Question: What sells the most in the Amazon store?
+Answer: In 2023, the five most shopped categories from US sellers in the Amazon store were Health & Personal Care, Beauty, Home, Grocery, and Apparel. Check out Amazon Best Sellers for an hourly update with the most popular products based on sales.
+
+Question: How do I manage my selling account?
+Answer: You can use Seller Central to manage all parts of your Amazon business.
+
+Question: How can I increase Amazon sales?
+Answer: There are many ways to increase sales in the Amazon store. You can increase visibility for your product by offering promotions, coupons, or deals. Creating cost-per-click (CPC) ads that appear both in and beyond the Amazon store can also help. Using Fulfillment by Amazon (FBA) offers customers Prime shipping, and enrolling your brand in Amazon Brand Registry allows you to create a free Amazon storefront. Additionally, after enrolling your brand, you can enhance product listings with A+ content to help drive sales.
+
+Question: What is the Featured Offer?
+Answer: The Featured Offer is the offer that appears at the top of a product detail page with the Buy Now and Add to Cart buttons.
+
+Question: What are the differences between the Professional and Individual selling plan?
+Answer: We offer two selling plans so you can choose the right package of tools and programs for the right price. Each plan also provides you with access to a specific group of optional programs and tools.
+
+Question: Can I switch from a Professional selling plan to an Individual selling plan?
+Answer: You can switch selling plans anytime from the Manage Your Services page in Seller Central. Select Selling On Amazon, then select your preferred plan type and click Apply changes.
+
+Question: What's the A-to-z Guarantee?
+Answer: The Amazon A-to-z Guarantee ensures that customers have a consistent experience when making purchases across the Amazon store.

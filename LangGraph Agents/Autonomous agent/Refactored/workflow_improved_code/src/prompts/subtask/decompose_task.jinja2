@@ -1,0 +1,18 @@
+Given the task: "{{ task }}", perform the following steps:
+
+1. Carefully analyze the user's request to fully understand the intent, context, and desired outcomes.
+2. Identify the key objectives and specific requirements, removing any duplicate, redundant, or semantically overlapping information.
+3. Decompose the task into clear, meaningful, and stable subtasks that directly support the primary objective.
+   - Avoid splitting the process into trivial, overly granular, or redundant steps.
+   - Ensure subtasks align with capabilities of reputable service providers like n8n, Gumloop, Zapier, etc.
+   - Group related actions into a single subtask when appropriate to avoid unnecessary fragmentation.
+   - Do NOT add any subtasks that are not explicitly or implicitly requested by the user.
+4. For each subtask, generate 2-3 diverse, high-quality examples showcasing distinct approaches with minimal overlap.
+5. Analyze these examples to extract a meta-pattern using the interrogatives (Who, What, When, Where, Why, How) that encapsulates the task's core components and context.
+6. Consolidate the subtasks into a single, logically ordered sequence, ensuring no consecutive repetition of similar subtasks and avoiding semantic duplication.
+
+Return ONLY a valid JSON object with EXACTLY these keys:
+   - "subtasks": a list of subtask names, each reflecting a distinct, meaningful, and stable step.
+   - "sequence": a list detailing the execution order of these subtasks, with no consecutive repetition of the same node type.
+
+Do NOT include any extra tokens, markdown, or formatting (such as __start__ or __end__) in your output.

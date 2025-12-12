@@ -1,0 +1,100 @@
+@startuml
+!define C4P https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master
+!includeurl C4P/C4_Context.puml
+!includeurl C4P/C4_Container.puml
+!includeurl C4P/C4_Component.puml
+
+'===========================================
+' System Context
+'===========================================
+Person(developer, "Developer", "Writes code and interacts with EmbeddingService API")
+System_Boundary(ai_system, "AI Workflow System") {
+    Container(web_app, "AI Workflow API", "Python/Flask", "Exposes endpoints for embedding operations")
+    ContainerDb(postgres, "PostgreSQL DB", "Database", "Stores node_embeddings table")
+    Container(env, "Environment Variables", "Config", "EMBEDDING_MODEL, HF_API_TOKEN, DB_*")
+    Container(hf_hub, "HuggingFace Hub", "Model Repository", "Public/private embedding models")
+    Container(infer_client, "InferenceClient", "API Client", "Optional remote embedding service")
+}
+
+Rel(developer, web_app, "calls /embed and /store endpoints")
+Rel(web_app, env, "reads config via os.getenv()")
+Rel(web_app, hf_hub, "downloads model via SentenceTransformer", "HTTPS")
+Rel(web_app, infer_client, "invokes encode()", "HTTPS")
+Rel(web_app, postgres, "executes INSERT/UPSERT", "psycopg2/SQL")
+
+'===========================================
+' Container: EmbeddingService Components
+'===========================================
+Container(web_app, "AI Workflow API", "Python/Flask") {
+    Component(config_loader, "ConfigLoader", "Module", "Validates and loads ENV vars")
+    Component(model_manager, "ModelManager", "Module", "Handles download, caching, loading of SentenceTransformer model") 
+    Component(inf_client_adapter, "InferenceClientAdapter", "Module", "Wraps InferenceClient for remote embeddings")
+    Component(embedding_generator, "EmbeddingGenerator", "Module", "get_embeddings(text) → raw vector")
+    Component(normalizer, "Normalizer", "Module", "normalize_embedding(vector) → unit vector")
+    Component(batch_processor, "NodeBatchProcessor", "Module", "generate_and_store_node_embeddings(nodes)")
+    Component(db_client, "DBClient", "Module", "Manages psycopg2 connections and upserts")
+    Component(logger, "Logger", "Library", "Centralized logging integration (ELK, Sentry)")
+}
+
+'===========================================
+' Component Relationships & Flows
+'===========================================
+Rel(config_loader, model_manager, "provides model_name, paths, API tokens")
+Rel(model_manager, hf_hub, "download model if missing", "HTTPS")
+Rel(model_manager, model_manager, "save to cache & load local model")
+Rel(model_manager, embedding_generator, "provides self.model for encode")
+Rel(inf_client_adapter, embedding_generator, "fallback encode via InferenceClient")
+Rel(embedding_generator, normalizer, "passes raw vector for normalization")
+Rel(normalizer, batch_processor, "normalized vector to format for DB")
+Rel(batch_processor, db_client, "formats embeddings and upserts into node_embeddings")
+Rel(batch_processor, logger, "logs errors, warnings, successes")
+Rel(db_client, postgres, "UPSERT with ON CONFLICT")
+Rel(logger, env, "reads log level & sinks from config")
+
+'===========================================
+' Sequence: State Transitions (Simplified)
+'===========================================
+== Initialization Flow ==
+developer -> web_app: POST /initialize
+web_app -> config_loader: load_and_validate_env()
+config_loader --> web_app: validated settings
+web_app -> model_manager: ensure_model_loaded()
+alt Local model exists
+    model_manager --> web_app: model loaded
+else Download required
+    model_manager -> hf_hub: request model
+    hf_hub --> model_manager: model artifacts
+    model_manager -> model_manager: save & load
+    model_manager --> web_app: model loaded
+end
+web_app -> logger: INFO initialization complete
+
+== Embedding Request Flow ==
+developer -> web_app: POST /embed { "text": "..." }
+web_app -> config_loader: validate_text(text)
+config_loader --> web_app: valid text
+web_app -> embedding_generator: get_embeddings(text)
+alt Using local model
+    embedding_generator -> SentenceTransformer: encode(text)
+else Using InferenceClient
+    embedding_generator -> infer_client_adapter: encode(text)
+end
+embedding_generator --> normalizer: raw vector
+normalizer --> web_app: unit vector
+web_app -> logger: DEBUG embedding generated
+web_app --> developer: [0.123, 0.456, ...]
+
+== Batch Storage Flow ==
+developer -> web_app: POST /store_nodes { nodes: [...] }
+web_app -> batch_processor: generate_and_store_node_embeddings(nodes)
+batch_processor -> embedding_generator: get_embeddings(each text)
+batch_processor -> normalizer: normalize_embedding(each vector)
+batch_processor -> db_client: upsert(formatted embeddings)
+db_client -> postgres: INSERT ... ON CONFLICT
+postgres --> db_client: success or conflict update
+db_client --> batch_processor: commit
+batch_processor -> logger: INFO storage success
+batch_processor --> web_app: summary report
+web_app --> developer: {"inserted": n, "skipped": m}
+
+@enduml

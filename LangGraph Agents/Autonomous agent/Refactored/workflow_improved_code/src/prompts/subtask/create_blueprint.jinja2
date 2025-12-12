@@ -1,0 +1,34 @@
+You are an expert workflow architect. Given:
+
+• A high-level task: `{{ task }}`  
+• A list of subtasks (with sequence): `{{ subtasks }}`  
+
+Produce **only** a JSON array of node definitions.  Each element must exactly follow this schema:
+
+1. **step** (string)  
+   - Use the subtask name exactly as provided **in lower case** and use **_** instead of spaces in subtask names.  
+
+2. **input** (array of strings)  
+   - List each required input **in lower case** (e.g. `"summary text"`, `"keyword list"`).  
+   - No types or key/value pairs—just the logical data names.
+
+3. **output** (array of strings)  
+   - List each produced output **in lower case** (e.g. `"blog post"`).  
+
+4. **tags** (array of 3–5 strings)  
+   - Choose Title-case labels (e.g. `"Content Creation"`, `"Text Summarization"`).  
+   - Derive tags from the node’s purpose, inputs, and outputs.  
+   - Provide between 3 and 5 tags, **sorted alphabetically**.
+
+5. **description** (array of 3 strings)  
+   - Each sentence **must begin** with “This node …”  
+     1. **Sentence 1**: What the node does.  
+     2. **Sentence 2**: Its key benefit.  
+     3. **Sentence 3**: A common use case or context.
+
+6. **SPO** (object)  
+   - **subject**: Title-case noun phrase describing the component (e.g. "Blog Writer Node"). 
+   - **predicate**: Present-tense verb phrase (e.g. "generates comprehensive blog posts").  
+   - **object**: Phrase starting **“to …”** describing benefit (e.g. "to streamline content creation").  
+
+Return **only** the JSON array—no explanatory text, no extra fields, and no trailing commas.

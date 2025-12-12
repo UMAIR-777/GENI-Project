@@ -1,0 +1,16 @@
+{"id": "analyze_image",
+"type": "runnable",
+"data": {"id": ["langgraph",
+                "utils",
+                "runnable",
+                "RunnableCallable"],
+        "name": "analyze_image"
+        },
+"inputs": {
+        "image_file": "",
+        "prompt": ""
+},
+"output": {
+        "image_analysis": ""
+}
+}

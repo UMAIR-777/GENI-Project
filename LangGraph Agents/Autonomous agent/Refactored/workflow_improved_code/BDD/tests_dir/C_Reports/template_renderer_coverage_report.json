@@ -1,0 +1,23 @@
+{
+  "code_coverage": 94.73684210526315,
+  "total_lines": 133,
+  "executed_lines": 126,
+  "missing_lines": [
+    118,
+    139,
+    140,
+    
+    207,
+    208,
+    209,
+    210
+  ],
+  "total_features": 17,
+  "covered_features": 0,
+  "feature_coverage": [],
+  "warnings": [
+    "Unexecuted lines in src/template_renderer.py: [118, 139, 140, 207, 208, 209, 210]",
+    "Code coverage is below 100%: 94.74%",
+    "Only 0/17 feature markers were covered."
+  ]
+}

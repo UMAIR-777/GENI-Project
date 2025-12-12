@@ -1,0 +1,85 @@
+@startuml
+!define C4P https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0/C4_Container.puml
+!include C4P
+
+' =========================
+' System Context
+' =========================
+Person(aiEngineer, "AI Engineer", "Interacts via CLI and API to render prompts")
+
+System_Boundary(promptSystem, "Prompt Rendering System") {
+  Container(cliApp, "CLI Application", "Python", "Parses CLI args and invokes TemplateRenderer.render_prompt()")
+  Container(apiService, "Render API Service", "FastAPI", "Exposes POST /render endpoint")
+  Container(rendererLib, "TemplateRenderer Library", "Python", "Core rendering logic")
+  ContainerDb(fsTemplates, "Template File Store", "File System", "Stores .jinja2 template files")
+  ContainerDb(envStore, ".env Configuration", "File", "Holds MODEL_PATH and other env variables")
+}
+
+' =========================
+' Inter-Container Relationships
+' =========================
+Rel(aiEngineer, cliApp, "Runs CLI to render prompts")
+Rel(aiEngineer, apiService, "Calls API to render prompts")
+Rel(cliApp, rendererLib, "Invokes render_prompt()", "function call")
+Rel(apiService, rendererLib, "Invokes render_prompt()", "library call")
+Rel(rendererLib, fsTemplates, "Reads templates from", "FileSystemLoader")
+Rel(rendererLib, envStore, "Loads env variables from", ".env reader")
+
+' =========================
+' Component-Level within TemplateRenderer Library
+' =========================
+Container_Boundary(rendererLib, "TemplateRenderer Library") {
+  Component(envLoader, "EnvLoader", "Python", "Loads and validates .env")
+  Component(z3Validator, "Z3Validator", "Python", "Validates folder & name via Z3 rules")
+  Component(pathNormalizer, "PathNormalizer", "Python", "Normalizes template filenames")
+  Component(cacheManager, "CacheManager", "LRUCacheManager", "Thread-safe cache for compiled templates")
+  Component(contextSerializer, "ContextSerializer", "Python", "Serializes context (dict, list, objects)")
+  Component(jinjaEngine, "Jinja2 Engine", "Jinja2", "Renders templates with context")
+  Component(errorHandler, "ErrorHandler", "Python", "Wraps, logs, and rethrows errors appropriately")
+  Component(cliController, "CLI Controller", "Python", "Parses CLI input, calls TemplateRenderer")
+  Component(apiController, "API Controller", "FastAPI", "Handles HTTP requests, calls TemplateRenderer")
+}
+
+' =========================
+' Component Interactions & Flow
+' =========================
+Rel(rendererLib, envLoader, "Load and validate env", "init sequence")
+Rel(rendererLib, z3Validator, "Validate folder & template names", "pre-init & pre-render")
+Rel(rendererLib, pathNormalizer, "Normalize template path", "get_template_path()")
+Rel(rendererLib, cacheManager, "Lookup or store compiled template", "cache get/set")
+Rel(rendererLib, fsTemplates, "Load template file on cache miss", "FileSystemLoader")
+Rel(rendererLib, contextSerializer, "Serialize context values", "pre-processing")
+Rel(rendererLib, jinjaEngine, "Compile and render template", "render()")
+Rel(rendererLib, errorHandler, "Handle errors and logging", "around render flow")
+Rel(cliApp, cliController, "Delegates CLI args", "entrypoint")
+Rel(apiService, apiController, "Delegates HTTP calls", "entrypoint")
+Rel(cliController, rendererLib, "Calls render_prompt()", "function call")
+Rel(apiController, rendererLib, "Calls render_prompt()", "library call")
+
+' =========================
+' Sequence of Actions / State Transitions
+' =========================
+note over cliController, rendererLib
+1. CLI reads .env via EnvLoader  
+2. CLI passes template_name and context to TemplateRenderer  
+3. TemplateRenderer:
+   a. Z3Validator checks folder & name  
+   b. PathNormalizer normalizes filename  
+   c. CacheManager lookup  
+     - hit: return cached template  
+     - miss: FileSystemLoader loads template → cacheManager stores it  
+   d. ContextSerializer processes context  
+   e. Jinja2 Engine renders  
+   f. ErrorHandler wraps any exceptions  
+4. Renderer returns prompt to CLI  
+5. CLI prints output  
+end note
+
+note over apiController, rendererLib
+1. APIController loads .env via EnvLoader  
+2. APIController receives POST /render JSON  
+3. APIController calls TemplateRenderer.render_prompt()  
+4. Same internal flow as CLI  
+5. APIController returns JSON response with prompt  
+end note
+@enduml

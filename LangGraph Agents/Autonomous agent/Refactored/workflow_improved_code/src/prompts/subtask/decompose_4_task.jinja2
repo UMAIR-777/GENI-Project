@@ -1,0 +1,23 @@
+Given the task: "{{ task }}", perform the following steps:
+
+1. **Analyze the task deeply** to understand the user’s intent, context, and real-world domain. Identify the initiating action that triggers the workflow and infer implicit requirements (e.g., initial trigger, core logic, success criteria, endpoint) for ambiguous or high-level queries, using domain-specific knowledge.
+2. **Identify key objectives** and specific requirements, removing any duplicate, redundant, or overlapping information. Distinguish between explicit elements (stated actions, roles, data, conditions) and implicit elements logically required by the domain.
+3. **Decompose the task** into clear, meaningful, distinct, and stable subtasks that align with real-world workflows. Ensure:
+   - Subtasks are granular enough to reflect necessary, distinct steps (e.g., separate “verify” and “process” actions).
+   - Subtasks cover initiation, core processing, validation, completion, and exception-handling steps (where implied by domain logic).
+   - Subtasks avoid over-splitting (unnecessary steps) or under-splitting (overly broad steps).
+   - Subtasks use general-purpose phrasing, free of domain-specific jargon or tool-specific terms.
+4. **Validate subtasks** using:
+   - A mental checklist of standard industry workflows to ensure comprehensive coverage of all stages (initiation → processing → validation → completion → exceptions).
+   - 2–3 diverse, realistic examples per workflow to confirm subtasks are necessary, distinct, and robust across domain variations.
+   - Interrogatives (Who, What, When, Where, Why, How) to ensure subtasks address all actors, inputs, logic, and outcomes.
+5. **Sequence subtasks logically** into a single, ordered workflow that respects real-world dependency chains. Ensure:
+   - No consecutive repetition of similar subtasks.
+   - No illogical step order (e.g., notification before action).
+   - Sequence aligns with domain-specific standards.
+
+Return ONLY a valid JSON object with EXACTLY these keys:
+- `"subtasks"`: A list of subtask names, each reflecting a distinct, meaningful, and necessary step.
+- `"sequence"`: A list of the same subtask names in logical execution order, respecting dependencies.
+
+Do NOT include any extra tokens, markdown, or formatting in the output.

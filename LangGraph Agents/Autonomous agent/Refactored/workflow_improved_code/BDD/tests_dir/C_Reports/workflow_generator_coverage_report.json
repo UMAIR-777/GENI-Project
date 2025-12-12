@@ -1,0 +1,17 @@
+{
+  "code_coverage": 98.34710743801654,
+  "total_lines": 121,
+  "executed_lines": 119,
+  "missing_lines": [
+    505,
+    510
+  ],
+  "total_features": 18,
+  "covered_features": 0,
+  "feature_coverage": [],
+  "warnings": [
+    "Unexecuted lines in src/workflow_generator.py: [505, 510]",
+    "Code coverage is below 100%: 98.35%",
+    "Only 0/18 feature markers were covered."
+  ]
+}

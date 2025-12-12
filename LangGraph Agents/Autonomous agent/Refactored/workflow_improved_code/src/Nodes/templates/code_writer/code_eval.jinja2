@@ -1,0 +1,85 @@
+{# Jinja2 template: code_eval.jinja2 #}
+{# Consolidated evaluation metrics for Code generation phase #}
+{
+  "Interface_Integrity": {
+    "description": "Preservation of public interfaces (inputs/outputs) without unintended changes.",
+    "rubric": {"1": "Interfaces changed or unclear.", "5": "Minor documented changes.", "10": "Interfaces preserved exactly."}
+  },
+
+  "SOLID_Adherence": {
+    "description": "Conformance to SOLID principles in class and function design.",
+    "rubric": {"1": "Multiple SOLID violations.", "5": "Some principles applied; gaps remain.", "10": "Full SOLID compliance."}
+  },
+
+  "Documentation_and_Docstrings": {
+    "description": "Comprehensive function/class docstrings with @Feature and @Scenario annotations.",
+    "rubric": {"1": "Missing or empty docstrings.", "5": "Basic docs; missing annotations.", "10": "Detailed docs with correct tags."}
+  },
+
+  "Input_Validation_and_Error_Handling": {
+    "description": "Robust input validation, clear error raising, and exception handling.",
+    "rubric": {"1": "No validation or handling.", "5": "Partial checks; some cases unhandled.", "10": "Thorough validation and clear errors."}
+  },
+
+  "Edge_and_Boundary_Coverage": {
+    "description": "Handling of all specified edge cases and boundary conditions.",
+    "rubric": {"1": "Most edge cases missing.", "5": "Basic cases handled; complex ones missing.", "10": "All conditions covered."}
+  },
+
+  "Architecture_Alignment": {
+    "description": "Code structure follows the provided Architecture PlantUML design.",
+    "rubric": {"1": "Ignores architecture.", "5": "Partial alignment; discrepancies exist.", "10": "Fully aligns with design."}
+  },
+
+  "BDD_Feature_Coverage": {
+    "description": "Implementation completeness against BDD features and scenarios.",
+    "rubric": {"1": "Most scenarios unmet.", "5": "Some scenarios; gaps remain.", "10": "All scenarios implemented."}
+  },
+
+  "Performance_and_Optimization": {
+    "description": "Algorithmic efficiency and resource usage optimizations.",
+    "rubric": {"1": "Inefficient; major bottlenecks.", "5": "Some optimizations; potential issues.", "10": "High-performance and scalable."}
+  },
+
+  "Readability_and_Style": {
+    "description": "Adherence to style guides, naming conventions, and code clarity.",
+    "rubric": {"1": "Poorly formatted;", "5": "Minor style issues.", "10": "Clean and idiomatic."}
+  },
+
+  "Testability_and_Mockability": {
+    "description": "Ease of writing tests via dependency injection and clear mock points.",
+    "rubric": {"1": "Tightly coupled; hard to test.", "5": "Some DI/mocks; missing hooks.", "10": "Fully testable with DI."}
+  },
+
+  "Dependency_Management": {
+    "description": "Appropriate handling of external libraries, versioning, and package management.",
+    "rubric": {"1": "Undocumented or ad-hoc dependencies.", "5": "Some version control; missing dependency spec.", "10": "Well-managed with clear requirements."}
+  },
+
+  "Logging_and_Observability": {
+    "description": "Presence of meaningful logging and hooks for metrics/tracing.",
+    "rubric": {"1": "No logging.", "5": "Basic logs; limited insight.", "10": "Comprehensive logs and observability."}
+  },
+
+  "Security_and_Sanitization": {
+    "description": "Proper handling of inputs to prevent injection and security flaws.",
+    "rubric": {"1": "No security checks.", "5": "Basic sanitization; gaps exist.", "10": "Thorough security validation."}
+  }
+}
+
+---
+
+Role: {{ role }}
+Task: {{ task }}
+
+Generated Code to Evaluate:
+```
+{{ previous_output }}
+```
+
+Evaluate the above code strictly against the defined metrics.  
+Return a JSON object mapping each metric to:
+  - `score`: integer (1–10)
+  - `comment`: brief justification
+
+No additional text or formatting.

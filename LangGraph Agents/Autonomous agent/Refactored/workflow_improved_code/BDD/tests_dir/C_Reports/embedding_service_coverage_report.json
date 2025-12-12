@@ -1,0 +1,18 @@
+{
+  "code_coverage": 97.45222929936305,
+  "total_lines": 157,
+  "executed_lines": 153,
+  "missing_lines": [
+    527,
+    528,
+    529,
+    534
+  ],
+  "total_features": 9,
+  "covered_features": 0,
+  "warnings": [
+    "Unexecuted lines in src/embedding_service.py: [527, 528, 529, 534]",
+    "Code coverage is below 100%: 97.45%",
+    "Only 0/9 feature markers were covered."
+  ]
+}

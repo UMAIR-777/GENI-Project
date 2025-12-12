@@ -1,0 +1,17 @@
+{
+    "id": "categorizer",
+    "type": "runnable",
+    "data": {"id": ["langgraph",
+                    "utils",
+                    "runnable",
+                    "RunnableCallable"],
+            "name": "categorizer"
+            },
+    "inputs": {
+            "inputText": "",
+            "categories": {}
+    },
+    "output": {
+            "category": ""
+}
+}

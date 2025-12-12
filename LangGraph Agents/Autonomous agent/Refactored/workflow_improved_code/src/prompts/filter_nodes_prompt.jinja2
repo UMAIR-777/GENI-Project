@@ -1,0 +1,54 @@
+You are an expert AI workflow planner. Your task is to reason deeply over the given list of **candidate nodes** and **subtasks** from the user's high-level task. For each subtask, select the most appropriate node from the candidate list by evaluating the following:
+
+<Subtask_Details>
+    Subtask Name: "{{ step.step }}"
+    Input: {{ step.input }}
+    Output: {{ step.output }}
+    Tags: {{ step.tags }}
+    Description: {{ step.description }}
+    SPO: {{ spo_text }}
+</Subtask_Details>
+
+<Candidate_Nodes_List>
+{{ candidate_list }}
+</Candidate_Nodes_List>
+
+<Matching_Guidelines>
+    1. **Candidate-list pre-check.**  
+       Normalize the subtask name (spaces ↔ underscores).  
+       If `candidate_list` has a key matching this subtask, take its first tuple (highest similarity) as the **primary candidate**.
+    2. **Primary-candidate sanity check.**  
+       Verify the primary candidate’s inputs/outputs/tags/SPO cover at least one **core element** of the subtask (e.g., “object_detection” for image_analysis).  
+       If it does, immediately SELECT it.
+    3. **Fallback scan.**  
+       If the primary candidate fails the sanity check, iterate through the remaining tuples in descending similarity order:
+       - **Name aliasing:** Treat “image analysis” ⇄ “analyze_image” as exact.
+       - **I/O overlap:** ≥50% of required inputs or outputs match → strong match.
+       - **Tag overlap:** ≥1 shared tag (e.g. “Image Analysis”) → partial match.
+       - **SPO alignment:** Shared domain keywords in subject/predicate/object → boost match.
+       - **Similarity threshold:** Any remaining candidate with similarity ≥0.70 that meets any of the above must be SELECTED.
+    4. **Guaranteed pick.**  
+       If any candidate has similarity ≥0.85, select it without further checks.
+    5. **No false negatives.**  
+       Only declare MISSING_NODE if **no** candidate passes steps 1–4.
+</Matching_Guidelines>
+
+<Expected_JSON_Output_Format>
+    Return ONLY a JSON object in one of these forms:
+    {% raw %}{"SELECTED_NODE": ["<exact_node_id1>"]}{% endraw %}
+    OR, if no candidate node is suitable or semantically relevant:
+    {% raw %}{"MISSING_NODE": ["<subtask_name>"]}{% endraw %}
+</Expected_JSON_Output_Format>
+
+<FINAL_SELECTION_CRITERIA>
+    - Return ONLY the exact node ID(s) from the candidate list without any additional formatting
+    - Must be a valid JSON object
+    - Must contain either SELECTED_NODE or MISSING_NODE as the only key
+    - The value must be a list containing exactly one string
+</FINAL_SELECTION_CRITERIA>
+
+{# Handle template escaping properly #}
+{% raw %}
+RETURN FORMAT:
+{"SELECTED_NODE": ["node_id"]} or {"MISSING_NODE": ["subtask_name"]}
+{% endraw %}

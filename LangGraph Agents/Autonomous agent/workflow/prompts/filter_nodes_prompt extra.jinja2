@@ -1,0 +1,43 @@
+<Subtask_Details>
+    Required Task: "{{ step.step }}"
+    Expected Inputs: {{ step.input | tojson }}
+    Expected Outputs: {{ step.output | tojson }}
+    Domain Tags: {{ step.tags | tojson }}
+    Task Description: {{ step.description | tojson }}
+    Functional Intent (spo): {{ spo_text }}
+</Subtask_Details>
+
+<Available_Nodes>
+{{ candidate_list }}
+</Available_Nodes>
+
+<Analysis_Guidelines>
+1. Semantic Understanding:
+   - Consider the core functionality and purpose of both subtask and candidate nodes
+   - Look for nodes that can fulfill the intended outcome, even if through different approaches
+   - Recognize equivalent or compatible input/output patterns
+   - Consider domain alignment and functional capabilities
+
+2. Compatibility Assessment:
+   - Evaluate if a node can effectively accomplish the subtask's goal
+   - Consider semantic equivalence in input/output parameters
+   - Look for functional overlap in descriptions and capabilities
+   - Assess if the node's domain expertise matches the task requirements
+
+3. Selection Criteria:
+   - Choose nodes that can meaningfully fulfill the subtask's purpose
+   - Prioritize nodes with strong functional alignment
+   - Consider broader context and workflow compatibility
+   - Select based on capability to achieve desired outcome
+
+4. Missing Node Determination:
+   - Return MISSING_NODE only if no available node can reasonably fulfill the task
+   - Consider creative but valid uses of existing nodes before marking as missing
+</Analysis_Guidelines>
+
+<Response_Format>
+Return ONLY a JSON object in one of these forms:
+{% raw %}{"SELECTED_NODE": ["node_id"]}{% endraw %}
+OR
+{% raw %}{"MISSING_NODE": ["subtask_name"]}{% endraw %}
+</Response_Format>

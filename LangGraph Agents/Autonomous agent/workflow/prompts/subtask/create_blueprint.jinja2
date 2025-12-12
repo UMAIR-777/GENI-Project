@@ -1,0 +1,20 @@
+Given the task: "{{ task }}"
+And the identified subtasks: {{ subtasks }}
+
+For each subtask, generate a blueprint that strictly follows the node format. Each blueprint dictionary must include:
+
+- "step": A string representing the subtask name.
+- "input": A list of input parameter names as strings (e.g., ["prompt", "context"]). Do not provide objects or key/value pairs.
+- "output": A list of output parameter names as strings (e.g., ["ai_response", "generated_text", "AI"]).
+- "tags": A list of exactly 3 to 5 tags (strings) that describe the node's domain and function.
+- "description": A list of three description strings where:
+     * The first line clearly states the node's primary function and theme.
+     * The second line explains the key benefits it provides.
+     * The third line offers additional context or typical use cases.
+- "spo": A dictionary with:
+    * "subject" → The core entity performing the action (e.g., "AI-powered classifier", "Automated data processor").
+    * "predicate" → A strong action verb describing what it does (e.g., "extracts", "analyzes", "optimizes").
+    * "object" → The intended purpose or benefit (e.g., "to improve decision-making", "for automation and efficiency").
+
+Return ONLY a JSON list of dictionaries with the keys: "step", "input", "output", "tags", "description", "spo".
+Do NOT include any additional text or explanations.

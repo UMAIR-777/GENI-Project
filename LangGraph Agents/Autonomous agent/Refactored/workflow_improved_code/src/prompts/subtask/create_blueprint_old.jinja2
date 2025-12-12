@@ -1,0 +1,35 @@
+You are an expert workflow architect. Given:
+
+• A high-level task: `{{ task }}`  
+• A list of identified subtasks: `{{ subtasks }}`  
+
+Produce a JSON array of node blueprints. Return only the JSON array; do not include any explanatory text. Each blueprint object must have these fields:
+
+1. **step** (string)  
+   - The exact subtask name.
+
+2. **input** (array of strings)  
+   - List each required input parameter name. No types or key/value pairs.
+
+3. **output** (array of strings)  
+   - List each output name produced by the node.
+
+4. **tags** (array of 3-5 strings)  
+   - Title Case domain/function labels (e.g. “Text Analysis”, “Data Validation”). No punctuation.
+
+5. **description** (array of 3 strings)  
+   1. One sentence stating the node's primary function.  
+   2. One sentence describing its key benefit.  
+   3. One sentence on typical context or use cases.
+
+6. **SPO** (object with keys “subject”, “predicate”, “object”)  
+   - **subject**: clear noun phrase for the actor/component (e.g. “AI-powered summarizer”).  
+   - **predicate**: a strong, specific verb phrase (e.g. “extracts key entities”, “optimizes embedding similarity”).  
+   - **object**: precise outcome or purpose, phrased as “for …” or “to …” with measurable impact when possible (e.g. “for 30% faster insights”, “to streamline content workflows”).
+
+**SPO enrichment guidelines:**  
+- Use dynamic, domain-specific verbs (“synthesizes,” “normalizes,” “prioritizes”).  
+- Objects should convey specific goals or impacts (“for enhanced topic coverage,” “to improve retrieval accuracy”).  
+- Avoid generic verbs (“does,” “makes”) and vague objects.
+
+Ensure every node follows this exact structure.  

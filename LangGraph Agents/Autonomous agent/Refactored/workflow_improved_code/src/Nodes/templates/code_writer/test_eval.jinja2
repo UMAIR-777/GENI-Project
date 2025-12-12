@@ -1,0 +1,85 @@
+{# Jinja2 template: test_eval.jinja2 #}
+{# Refined evaluation metrics for Test generation phase #}
+{
+  "BDD_Mapping_Coverage": {
+    "description": "Degree to which tests map 1:1 to BDD features and scenarios.",
+    "rubric": {"1": "No mapping.", "5": "Partial mapping; key scenarios missing.", "10": "Every scenario mapped to a test."}
+  },
+
+  "Branch_and_Path_Coverage": {
+    "description": "Extent of code branches and logical paths exercised.",
+    "rubric": {"1": "Only happy path tested.", "5": "Some branches; many paths missing.", "10": "All branches and paths covered."}
+  },
+
+  "Edge_and_Error_Case_Testing": {
+    "description": "Balance of positive, negative, and boundary condition tests.",
+    "rubric": {"1": "Only positive tests.", "5": "Some negative/boundary tests.", "10": "Comprehensive positive, negative, and boundary tests."}
+  },
+
+  "Property_and_Parameterized_Testing": {
+    "description": "Coverage of broad input spaces via parameterized or property-based tests.",
+    "rubric": {"1": "No parameterized tests.", "5": "Basic parameterization; limited cases.", "10": "Thorough parameterized and property-based tests."}
+  },
+
+  "Model_and_Chaos_Testing": {
+    "description": "Incorporation of model-based scenarios and chaos/fuzz testing.",
+    "rubric": {"1": "No model/chaos tests.", "5": "Basic model or chaos tests.", "10": "Extensive model-based and chaos experiments."}
+  },
+
+  "Mocking_and_Isolation": {
+    "description": "Quality of test isolation through mocking/stubbing external dependencies.",
+    "rubric": {"1": "No mocking; real integrations used.", "5": "Some mocks; gaps remain.", "10": "All external interactions mocked appropriately."}
+  },
+
+  "Test_Coverage_Percentage": {
+    "description": "Measured percentage of code covered by tests.",
+    "rubric": {"1": "<50% coverage.", "5": "50–80% coverage.", "10": ">90% coverage."}
+  },
+
+  "Test_Data_and_Environment_Management": {
+    "description": "Use of fixtures, test data setup, and environment isolation.",
+    "rubric": {"1": "No fixtures; ad-hoc data.", "5": "Some fixtures; inconsistent setups.", "10": "Robust fixtures and isolated environments."}
+  },
+
+  "Automation_and_CI_Integration": {
+    "description": "Ease of integrating tests into CI/CD pipelines.",
+    "rubric": {"1": "Manual execution only.", "5": "Basic CI job; flaky tests.", "10": "Automated, reliable CI pipeline tests."}
+  },
+
+  "Readability_and_Maintainability": {
+    "description": "Clarity, structure, and style consistency of test code.",
+    "rubric": {"1": "Poorly structured/test code.", "5": "Some structure; style issues.", "10": "Clean, consistent, idiomatic tests."}
+  },
+
+  "Performance_and_Regression_Guards": {
+    "description": "Inclusion of performance benchmarks and regression detection.",
+    "rubric": {"1": "No performance/regression tests.", "5": "Basic regression checks.", "10": "Comprehensive performance and regression suites."}
+  },
+
+  "Security_and_Compliance_Tests": {
+    "description": "Tests for security vulnerabilities, input sanitization, and compliance requirements.",
+    "rubric": {"1": "No security tests.", "5": "Basic sanitization tests.", "10": "Extensive security and compliance coverage."}
+  },
+
+  "Observability_and_Reporting": {
+    "description": "Integration of test reporting, logging, and metrics collection.",
+    "rubric": {"1": "No reporting or logs.", "5": "Basic reports; limited metrics.", "10": "Detailed reports and observability metrics."}
+  }
+}
+
+---
+
+Role: {{ role }}
+Task: {{ task }}
+
+Generated Test Suite to Evaluate:
+```
+{{ previous_output }}
+```
+
+Evaluate strictly against the metrics above.  
+Return a JSON object mapping each metric to:
+  - `score`: integer 1–10
+  - `comment`: concise justification
+
+No additional text.

@@ -1,0 +1,98 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+'-------------------------
+' Context: External Actors
+'-------------------------
+Person(clientApp, "Client Application", "Invokes workflow management functions")
+
+System_Boundary(wfSystem, "Workflow System") {
+  
+  '--------------------------------------
+  ' Container: Workflow Service (Python)
+  '--------------------------------------
+  Container(wfSvc, "WorkflowService", "Python 3.10", "Provides workflow CRUD, similarity search, node initialization, and normalization")
+  
+  '--------------------------------------
+  ' Container: Datastore
+  '--------------------------------------
+  ContainerDb(postgres, "PostgreSQL", "Relational Database", "Stores workflows, embeddings, and node metadata")
+
+  '--------------------------------------
+  ' Container: Logging & Monitoring
+  '--------------------------------------
+  Container(logSystem, "ELK/Sentry", "Logging & Monitoring", "Collects structured logs and alerts")
+}
+
+'-----------------------------
+' Relationships (High-Level)
+'-----------------------------
+Rel(clientApp, wfSvc, "Calls API functions\n• setup_database(sql_path)\n• retrieve_similar_workflow(query, top_k, threshold)\n• save_workflow(descriptions, workflow_json)\n• initialize_node_store()", "gRPC/Library")
+Rel(wfSvc, postgres, "Executes SQL via psycopg2", "TCP/5432")
+Rel(wfSvc, logSystem, "Emits structured logs", "JSON over HTTP")
+
+'-----------------------------------------------
+' Component View: Inside WorkflowService Container
+'-----------------------------------------------
+Container_Boundary(wfSvc) {
+  Component(dbMgr, "DatabaseManager", "Python Class", "Handles DB setup, connection pool, CRUD operations,\n• setup_database()\n• get_db_pool()\n• close_connection_pool()\n• retrieve_similar_workflow()\n• save_workflow()\n• initialize_node_store()")
+  Component(sqlLoader, "SQL Loader", "Utility Function", "Loads and validates SQL files")
+  Component(poolMgr, "ThreadedConnectionPool", "psycopg2 Pool", "Manages min/max DB connections")
+  Component(embedSvc, "EmbeddingService", "Python Class", "Wraps HF InferenceClient for embedding generation & normalization")
+  Component(inferenceClient, "InferenceClient", "Huggingface Hub SDK", "Performs model inference calls for embeddings")
+  Component(workflowModel, "Workflow", "Data Class", "Represents workflow data and normalization logic\n• normalize()")
+  Component(nodeStore, "NodeStoreInitializer", "Python Class", "Checks node table & populates AVAILABLE_NODES embeddings")
+}
+
+'------------------------------------------------
+' Component Interactions and Control Flows
+'------------------------------------------------
+Rel(sqlLoader, dbMgr, "Provides SQL text for setup_database()", "String")
+Rel(dbMgr, poolMgr, "Creates pool after DDL execution")
+Rel(dbMgr, postgres, "Executes DDL and DML commands")
+Rel(dbMgr, sqlLoader, "Loads SQL file content")
+Rel(dbMgr, poolMgr, "Fetches connections for queries")
+Rel(dbMgr, embedSvc, "Requests embeddings for descriptions or queries")
+Rel(embedSvc, inferenceClient, "Performs inference requests")
+Rel(dbMgr, nodeStore, "Calls during initialize_node_store()")
+Rel(nodeStore, embedSvc, "Generates embeddings for AVAILABLE_NODES")
+Rel(nodeStore, dbMgr, "Inserts node embeddings into database")
+Rel(workflowModel, dbMgr, "Used to wrap JSON->Workflow in retrieve_similar_workflow()")
+Rel(workflowModel, dbMgr, "Used to normalize output before return")
+
+'------------------------------------------------
+' State Transitions & Actions (Annotations)
+'------------------------------------------------
+note right of dbMgr
+  State Transitions:
+    - No pool -> setup_database() -> Pool Created
+    - Pool exists -> get_db_pool() -> Return Instance
+    - Pool exists -> close_connection_pool() -> Pool Closed
+    - Nodes empty -> initialize_node_store() -> Nodes Populated
+    - Nodes exist -> initialize_node_store() -> No-op
+end note
+
+note left of dbMgr
+  Control Flows:
+    1. setup_database():
+       a. sqlLoader.load_sql_file()
+       b. psycopg2.connect() -> execute DDL -> commit
+       c. ThreadedConnectionPool(...)
+    2. retrieve_similar_workflow():
+       a. validate query
+       b. embedSvc.get_embeddings()
+       c. psycopg2.connect() -> SQL SELECT -> fetchall
+       d. JSON parsing -> Workflow(...)
+       e. return list of WorkflowTuples
+    3. save_workflow():
+       a. validate inputs
+       b. embedSvc.get_embeddings()
+       c. psycopg2.connect() -> INSERT
+    4. initialize_node_store():
+       a. get_db_pool().cursor() -> COUNT(*)
+       b. if zero: store_nodes_with_embeddings()
+end note
+
+@enduml

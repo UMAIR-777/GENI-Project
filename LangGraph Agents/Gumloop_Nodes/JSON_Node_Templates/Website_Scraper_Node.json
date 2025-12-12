@@ -1,0 +1,16 @@
+{
+    "id": "Website_Scraper",
+    "type": "runnable",
+    "data": {"id": ["langgraph",
+                    "utils",
+                    "runnable",
+                    "RunnableCallable"],
+            "name": "Website_Scraper"
+            },
+    "inputs": {
+            "website_url": ""
+    },
+    "output": {
+            "website_scraped_content": ""
+}
+}

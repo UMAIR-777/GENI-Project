@@ -1,0 +1,15 @@
+Given the task: "{{ task }}", perform the following steps:
+
+1. Identify the key objectives and specific requirements by understanding the overall intent and context of the task. Remove any duplicate or redundant information.
+2. Decompose the task into clear, meaningful subtasks that directly support the primary objective.
+   - Do not split the process into trivial or overly granular steps.
+   - Exclude non-essential actions unless explicitly required.
+3. For each subtask, generate 3 diverse, high-quality examples that showcase distinct approaches with minimal overlap.
+4. Analyze these examples to extract a meta-pattern using the interrogatives (Who, What, When, Where, Why, How) that encapsulates the task's core components and context.
+5. Consolidate the subtasks into a single, logically ordered sequence, ensuring that similar actions are not repeated consecutively.
+
+Return ONLY a valid Format JSON object with EXACTLY these keys:
+   - "subtasks": a list of subtask names, each reflecting a distinct, meaningful step.
+   - "sequence": a list detailing the execution order of these subtasks, with no consecutive repetition of the same node type.
+
+Do NOT include any extra tokens, markdown, or formatting (such as __start__ or __end__) in your output.

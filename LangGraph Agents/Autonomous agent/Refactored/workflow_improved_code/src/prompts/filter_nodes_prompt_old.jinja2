@@ -1,0 +1,40 @@
+<Subtask_Details>
+    Subtask Name: "{{ step.step }}"
+    Input: {{ step.input }}
+    Output: {{ step.output }}
+    Tags: {{ step.tags }}
+    Description: {{ step.description }}
+    SPO: {{ spo_text }}
+</Subtask_Details>
+
+<Candidate_Nodes_List>
+{{ candidate_list }}
+</Candidate_Nodes_List>
+
+<Matching_Guidelines>
+    1. You MUST select the best candidate node ID(s) from the candidate list that can perform the subtask, even if the match is partial or approximate.
+    2. Prioritize candidates that have relevant inputs, outputs, tags, descriptions, or SPO fields that indicate capability to perform the subtask.
+    3. Consider semantic relevance, context, and the node's purpose to make the best possible selection.
+    4. Only return MISSING_NODE if NO candidate node is remotely related or capable of performing the subtask.
+    5. Return ONLY the exact node ID(s) from the candidate list as plain strings, no extra formatting or explanation.
+</Matching_Guidelines>
+
+<Expected_JSON_Output_Format>
+    Return ONLY a JSON object in one of these forms:
+    {% raw %}{"SELECTED_NODE": ["<exact_node_id1>"]}{% endraw %}
+    OR, if no candidate node is suitable or semantically relevant:
+    {% raw %}{"MISSING_NODE": ["<subtask_name>"]}{% endraw %}
+</Expected_JSON_Output_Format>
+
+<FINAL_SELECTION_CRITERIA>
+    - Must return ONLY the exact node ID(s) from the candidate list without any additional formatting
+    - Must be a valid JSON object
+    - Must contain either SELECTED_NODE or MISSING_NODE as the only key
+    - The value must be a list containing exactly one string
+</FINAL_SELECTION_CRITERIA>
+
+{# Handle template escaping properly #}
+{% raw %}
+RETURN FORMAT:
+{"SELECTED_NODE": ["node_id"]} or {"MISSING_NODE": ["subtask_name"]}
+{% endraw %}

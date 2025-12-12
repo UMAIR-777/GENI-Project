@@ -1,0 +1,40 @@
+@startuml
+!define C4P https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master
+!include C4P/C4_Context.puml
+!include C4P/C4_Container.puml
+
+Person(tester, "Integration Tester", "Executes BDD Scenarios")
+Person(user, "End User", "Submits tasks")
+
+System_Boundary(workflowSystem, "Workflow Service") {
+  Container(api, "API Layer", "Python Flask", "Exposes endpoint POST /generate_workflow")  
+  Container(workflowGen, "WorkflowGenerator Module", "Python", "Coordinates workflow creation via StateGraph")  
+  Container(stateGraph, "StateGraph Engine", "Python Library", "Executes state transitions with decision logic")  
+  Container(embeddingSvc, "EmbeddingService", "Python Module", "Generates & persists node embeddings")  
+  Container(planner, "WorkflowPlanner", "Python Module", "Decomposes tasks and generates plan")  
+  Container(dbMgr, "DatabaseManager", "Python Module", "Retrieves and saves workflows in PostgreSQL")  
+  ContainerDb(db, "PostgreSQL DB", "Database", "Stores workflows and node embeddings")  
+  Container(z3, "Z3 Constraint Solver", "Library", "Validates rules, constraints, and boundary conditions")  
+  Container(logSvc, "Logging Service", "ELK/Sentry", "Collects structured logs from all modules")  
+}
+
+System_Boundary(testHarness, "BDD Test Harness") {
+  Container(bddRunner, "Pytest-BDD Runner", "Python", "Executes Gherkin scenarios and property-based tests")  
+  Container(mockLibs, "Mock & Chaos Libraries", "Python", "Mocks external dependencies and injects failure scenarios")  
+}
+
+Rel(user, api, "POST /generate_workflow", "HTTPS")
+Rel(tester, bddRunner, "Triggers BDD scenarios")
+Rel(bddRunner, mockLibs, "Inject mocks/faults into")
+Rel(bddRunner, api, "Calls endpoints per Gherkin steps")
+Rel(api, workflowGen, "invoke generate_workflow()", "Function Call")
+Rel(workflowGen, stateGraph, "uses", "Library Call")
+Rel(workflowGen, embeddingSvc, "calls generate_and_store_node_embeddings()", "Function Call")
+Rel(workflowGen, planner, "calls create_planning_workflow() & invoke plan steps", "Function Call")
+Rel(workflowGen, dbMgr, "calls retrieve_similar_workflow()/save_workflow()", "Function Call")
+Rel(embeddingSvc, db, "read/write node_embeddings", "JDBC/psycopg2")
+Rel(dbMgr, db, "read/write workflows", "JDBC/psycopg2")
+Rel(workflowGen, z3, "validates [Rules,Constraints] via Z3", "Library Call")
+Rel(workflowGen, logSvc, "emits structured logs", "JSON over HTTP")
+Rel(bddRunner, db, "verifies persisted workflows", "Direct DB Query")
+@enduml

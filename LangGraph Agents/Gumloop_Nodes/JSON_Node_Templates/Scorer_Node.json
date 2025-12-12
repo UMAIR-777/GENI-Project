@@ -1,0 +1,17 @@
+{
+    "id": "scorer",
+    "type": "runnable",
+    "data": {"id": ["langgraph",
+                    "utils",
+                    "runnable",
+                    "RunnableCallable"],
+            "name": "scorer"
+            },
+    "inputs": {
+            "item": "",
+            "criteria": ""
+    },
+    "output": {
+            "score": ""
+}
+}
