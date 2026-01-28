@@ -1,0 +1,62 @@
+{
+  "ai_voice_bot": {
+    "metadata": {
+      "description": "AI voice-based lead qualification bot",
+      "interruptible": true
+    },
+    "state": {
+      "mainstate": "VoiceCallState",
+      "inputstate": null,
+      "outputstate": null
+    },
+    "nodes": [
+      { "id": "__start__", "type": "schema", "data": "__start__" },
+
+      {
+        "id": "start_call",
+        "type": "runnable",
+        "data": { "name": "start_call" }
+      },
+
+      {
+        "id": "speak",
+        "type": "runnable",
+        "data": { "name": "speak" },
+        "inputs": {
+          "greeting": "Hello! Are you interested in our services?"
+        }
+      },
+
+      {
+        "id": "listen",
+        "type": "runnable",
+        "data": { "name": "listen" },
+        "interrupt_after": true
+      },
+
+      {
+        "id": "qualify",
+        "type": "runnable",
+        "data": { "name": "qualify" }
+      },
+
+      {
+        "id": "decide_next",
+        "type": "runnable",
+        "data": { "name": "decide_next" }
+      },
+
+      { "id": "__end__", "type": "schema", "data": "__end__" }
+    ],
+    "edges": [
+  { "source": "__start__", "target": "start_call" },
+  { "source": "start_call", "target": "speak" },
+  { "source": "speak", "target": "listen" },
+  { "source": "listen", "target": "qualify" },
+  { "source": "qualify", "target": "decide_next" },
+  { "source": "decide_next", "target": "__end__" }
+]
+
+
+  }
+}

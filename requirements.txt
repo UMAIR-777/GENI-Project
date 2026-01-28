@@ -1,0 +1,55 @@
+# ----------------------------
+# CORE HTTP / ASYNC
+fastapi==0.115.8
+uvicorn==0.34.0
+httpx==0.28.1
+aiohttp==3.11.11
+aiofiles==23.2.1
+asyncio==3.4.3  # Needed for async workflows
+
+# ----------------------------
+# DATABASE
+SQLAlchemy==2.0.37
+psycopg2-binary==2.9.10
+python-dotenv==1.0.1
+
+# ----------------------------
+# TWILIO
+twilio==9.9.0
+
+# ----------------------------
+# LANGGRAPH
+langgraph==0.2.63
+
+# ----------------------------
+# OPENAI / WHISPER
+openai==1.59.7
+
+# ----------------------------
+# ELEVENLABS (optional, for TTS)
+elevenlabs==2.27.0
+
+# ----------------------------
+# STREAMLIT (for dashboards / testing)
+streamlit==1.52.2
+
+# ----------------------------
+# UTILITIES
+requests==2.32.3
+pydantic==2.10.5
+pathlib==1.0.1
+uuid==1.30.0
+# shutil==1.0.0  # For copying files (used in speak node)
+
+# ----------------------------
+# OPTIONAL / COMMENTED OUT (not currently required in your workflow)
+# gradio==5.17.1
+# huggingface-hub==0.28.1
+# generativeai==0.0.1
+# transformers==4.48.0
+# torch==2.6.0
+# MarkupSafe==3.0.2
+# gspread==6.1.4  # Only if using Google Sheets
+# matplotlib-inline==0.1.7  # Only for plotting
+# langchain==0.3.14  # Only if using LangChain pipelines
+# spacy==3.8.7  # Only if NLP pipeline uses spaCy

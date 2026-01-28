@@ -1,0 +1,42 @@
+# =========================
+# Environment & Secrets
+# =========================
+.env
+.env.*       # in case multiple env files
+
+# =========================
+# Python cache / bytecode
+# =========================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# =========================
+# Virtual Environment
+# =========================
+voice_bot/   # virtualenv folder
+
+# =========================
+# Audio / Generated files
+# =========================
+audio_files/
+
+# =========================
+# Logs
+# =========================
+*.log
+
+# =========================
+# IDE / Editor
+# =========================
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
